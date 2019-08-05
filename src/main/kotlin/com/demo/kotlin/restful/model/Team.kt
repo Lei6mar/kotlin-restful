@@ -8,16 +8,16 @@ import javax.validation.constraints.NotBlank
 data class Team (
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
-        var id: Long = 0,
+        @Column(name = "id")
+        val id: Long = 0,
 
-        @get: NotBlank
-        var name: String = "",
+        @Column(name = "name")
+        val name: String = "",
 
-        @get: NotBlank
-        var points: Byte = 0,
+        @Column(name = "points")
+        val points: Byte = 0,
 
-        @JoinColumn(name = "league_id")
-        var league: League = League()
-
-
+        @ManyToOne(fetch = FetchType.LAZY)
+        @JoinColumn(name = "leagues_id")
+        val league: League = League()
 )
