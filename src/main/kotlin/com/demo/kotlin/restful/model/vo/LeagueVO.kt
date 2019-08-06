@@ -5,8 +5,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore
 data class LeagueVO(
         val id: Long = 0,
 
-        val name: String = "",
+        val name: String = ""
 
-        @JsonIgnore
-        val teams: List<TeamVO> = ArrayList()
+       // @JsonIgnore
+       // val teams: List<TeamVO> = ArrayList()
 )

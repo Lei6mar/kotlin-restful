@@ -10,27 +10,35 @@ class LeagueServiceImpl(private val leagueRepository: LeagueRepository) : League
 
     override fun save(leagueVO: LeagueVO): LeagueVO {
         val league = leagueRepository.save(League(leagueVO.id, leagueVO.name))
-        return LeagueVO(league.id, league.name)
+        return leagueToLeagueVo(league)
     }
 
     override fun findAll(): List<LeagueVO> {
         val leagues = leagueRepository.findAll()
         val leaguesVO = ArrayList<LeagueVO>()
         for (league in leagues){
-            leaguesVO.add(LeagueVO(league.id, league.name))
+            leaguesVO.add(leagueToLeagueVo(league))
         }
         return leaguesVO
     }
 
     override fun findById(id: Long): LeagueVO {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        val league = leagueRepository.findById(id).orElse(League())
+        return leagueToLeagueVo(league)
     }
 
     override fun updateById(id: Long, leagueVO: LeagueVO) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        val league = leagueRepository.findById(id).orElse(League())
+        if(league.id > 0){
+            leagueRepository.save(League(id, leagueVO.name))
+        }
     }
 
     override fun deleteById(id: Long) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        leagueRepository.deleteById(id)
+    }
+
+    private fun leagueToLeagueVo(league: League):LeagueVO {
+        return LeagueVO(league.id, league.name)
     }
 }
